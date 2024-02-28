@@ -24,17 +24,26 @@ const TERMS = array(
   106 => '2023SP'
 );
 
-// TODO: 6. key/value coding for academic year
-// 1: First-Year', 2: Sophomore, 3: Junior, 4: Senior
+// 6. key/value coding for academic year
+const YEAR = array(
+  1 => 'First-Year',
+  2 => 'Sophomore',
+  3 => 'Junior',
+  4 => 'Senior',
+);
 
-// TODO: 1. load the database library
-// require 'includes/db.php';
+// 1. load the database library
+require 'includes/db.php';
 
-// TODO: 2. open database
+// 2. open database
+$db = open_sqlite_db("secure/site.sqlite");
 
-// TODO: 3. query grades table
+// 3. query grades table
+$result = exec_sql_query($db, "SELECT * FROM grades");
 
-// TODO: 4. get records from query
+// 4. get records from query
+$records = $result->fetchAll();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,12 +74,16 @@ const TERMS = array(
 
       <?php
       // TODO: 5. write a table row for each record
-      // foreach ($records as $record) {
-      $course = 'TODO: course';
+      foreach ($records as $record) {
+      $course = $record["class_num"];
+      $term = $record["term"];
+      $year = $record["acad_year"];
+      $grade = $record["grade"];
 
       // row partial
       include 'includes/transcript-record.php';
-      // }
+
+      }
       ?>
 
     </table>
